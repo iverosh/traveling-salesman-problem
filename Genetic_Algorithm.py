@@ -16,10 +16,11 @@ class travelingSalesman(object):
         self.n_cities = n_cities
         self.xy_range = xy_range
         self.cities = cities
-        for i in range(self.n_cities):
-            x = random.randint(0, self.xy_range)
-            y = random.randint(0, self.xy_range)
-            cities.append((x, y))
+        if len(cities) == 0:
+            for i in range(self.n_cities):
+                x = random.randint(0, self.xy_range)
+                y = random.randint(0, self.xy_range)
+                cities.append((x, y))
 
     def plotCities(self):
         for city in self.cities:
@@ -101,8 +102,8 @@ def selectParents(population):
     return parent1, parent2
 
 
-if __name__ == '__main__':
-    ts = travelingSalesman()
+def startMethod(cities_input, n_cities_input):
+    ts = travelingSalesman(n_cities=n_cities_input, cities=cities_input)
 
     # baseline for our model
     random_route = ts.generateRoute()
@@ -145,3 +146,4 @@ if __name__ == '__main__':
     ts.plotRoute(solution)
     plt.show()
     print('final route distance is: ' + str(ts.getDistance(solution)))
+    return solution, ts.getDistance(solution)
