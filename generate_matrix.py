@@ -2,20 +2,21 @@ import random
 import numpy as np
 
 
-def generate(n, xy_range, seed):
-    random.seed = seed
+def generate(n, xy_range):
     cities = []
     for i in range(n):
         x = random.randint(0, xy_range)
         y = random.randint(0, xy_range)
         cities.append((x, y))
-    distance = np.zeros((n, n))
+    distance = []
     for i in range(n):
+        dist = []
         for j in range(n):
             if i == j:
-                distance[i][j] = 0
+                dist.append(0)
             else:
-                distance[i][j] = ((cities[i][0] - cities[j][0]) ** 2 + (cities[i][1] - cities[j][1]) ** 2) ** 0.5
+                dist.append(((cities[i][0] - cities[j][0]) ** 2 + (cities[i][1] - cities[j][1]) ** 2) ** 0.5)
+        distance.append(dist)
     return cities, distance
 
 
