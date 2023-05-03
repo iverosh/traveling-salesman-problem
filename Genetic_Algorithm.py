@@ -102,14 +102,34 @@ def selectParents(population):
     return parent1, parent2
 
 
+def plotCities_out(cities):
+    for city in cities:
+        plt.plot(city[0], city[1], 'bo')
+
+
+def plotRoute_out(route):
+    i = 0
+    while i < len(route):
+        if i + 1 == len(route):
+            x_values = [route[i][0], route[0][0]]
+            y_values = [route[i][1], route[0][1]]
+            plt.plot(x_values, y_values)
+        else:
+            x_values = [route[i][0], route[i + 1][0]]
+            y_values = [route[i][1], route[i + 1][1]]
+            plt.plot(x_values, y_values)
+        i += 1
+    plt.show()
+
+
 def startMethod(cities_input, n_cities_input):
     ts = travelingSalesman(n_cities=n_cities_input, cities=cities_input)
 
     # baseline for our model
     random_route = ts.generateRoute()
-    ts.plotCities()
-    ts.plotRoute(random_route)
-    plt.show()
+    # ts.plotCities()
+    # ts.plotRoute(random_route)
+    # plt.show()
     print('initial route distance is: ' + str(ts.getDistance(random_route)))
 
     # initialize population
@@ -142,8 +162,8 @@ def startMethod(cities_input, n_cities_input):
 
     population = population.sort_values('fitness', ascending=False, ignore_index=True)
     solution = population.iloc[0]['solutions']
-    ts.plotCities()
-    ts.plotRoute(solution)
-    plt.show()
+    # ts.plotCities()
+    # ts.plotRoute(solution)
+    # plt.show()
     print('final route distance is: ' + str(ts.getDistance(solution)))
     return solution, ts.getDistance(solution)
