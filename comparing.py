@@ -2,39 +2,40 @@ import Genetic_Algorithm as ga
 import numpy
 import generate_matrix
 import time
-from BnB import BnB, plot_cities
-from python_tsp.exact import solve_tsp_dynamic_programming
-n_cities = 5
+from BnB import plot_cities
+from python_tsp.exact import solve_tsp_dynamic_programming, solve_tsp_brute_force
 xy_range = 100
-#bnb_time = []
+
+
+bf_time = []
 dynamic_time = []
 ga_time = []
 delta = []
 cities_count = []
-for n_cities in range(4, 20, 2):
+for n_cities in range(6, 14, 2):
     print("Города:", n_cities)
     dynamic_av_time = 0
-    # bnb_av_time = 0
+    bf_av_time = 0
     ga_av_time = 0
     delta_ = 0
-    for i in range(1, 4):
+    for i in range(1, 6):
         cities, distance = generate_matrix.generate(n_cities, xy_range)
-        #print(cities)
+        distance_np = numpy.array(distance)
         ga_start = time.time()
         ga_sol, ga_dist = ga.startMethod(cities, n_cities)
         ga_end = time.time()
 
-        # bnb_start = time.time()
-        # bnb_sol, bnb_dist = BnB(distance)
-        # bnb_end = time.time()
-        # bnb_av_time += bnb_end - bnb_start
+        bf_start = time.time()
+        solve_tsp_brute_force(distance_np)
+        bf_end = time.time()
 
         dynamic_start = time.time()
-        path, dist = solve_tsp_dynamic_programming(numpy.array(distance))
+        path, dist = solve_tsp_dynamic_programming(distance_np)
         dynamic_end = time.time()
 
         dynamic_av_time += dynamic_end - dynamic_start
         ga_av_time += ga_end - ga_start
+        bf_av_time += bf_end - bf_start
 
         if ga_dist - dist < 0 and dist - ga_dist > 10 ** -10:
             print(ga_dist, dist)
@@ -49,8 +50,8 @@ for n_cities in range(4, 20, 2):
             delta_ =+ ga_dist - dist           #
             #print(delta_)
 
-    #bnb_time.append(bnb_av_time / i * 1000)
     dynamic_time.append(dynamic_av_time / i * 1000)
+    bf_time.append(bf_av_time / i * 1000)
     ga_time.append(ga_av_time / i * 1000)
     delta.append(delta_ / i)
     cities_count.append(n_cities)
@@ -58,9 +59,10 @@ for n_cities in range(4, 20, 2):
 
 
 for i in range(len(cities_count)):
-    print("Городов: {}, Среднее время GA: {:.2} мс, Dynamic: {:.2} мс, Ошибка GA: {:.2}".format(cities_count[i],
+    print("Городов: {}, Среднее время GA: {} мс, Dynamic: {} мс, Brute Force: {} мс, Ошибка GA: {:.2}".format(cities_count[i],
                                                                                                ga_time[i],
                                                                                                dynamic_time[i],
+                                                                                               bf_time[i],
                                                                                                delta[i]))
 
 
