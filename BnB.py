@@ -102,9 +102,11 @@ def BnB(matrix):
     visited = [False] * N
     final_res = maxsize
     TSP(matrix)
-    return final_res, final_path
+    return final_path, final_res
 
 def plot_cities(cities, path):
+    print(path)
+    #path = path[:-1]
     f = plt.figure()
     for city in cities:
         plt.plot(city[0], city[1], 'bo')
@@ -116,11 +118,11 @@ def plot_cities(cities, path):
         else:
             x = [cities[path[i]][0], cities[path[i + 1]][0]]
             y = [cities[path[i]][1], cities[path[i + 1]][1]]
-        plt.plot(x, y)
-    plt.show()
+        plt.plot(x, y, "r")
+    #plt.show()
 
-cities, dist = generate(12, 2000)
-
-sum, path = BnB(dist)
-
-plot_cities(cities, path)
+# cities, dist = generate(12, 2000)
+#
+# sum, path = BnB(dist)
+#
+# plot_cities(cities, path)

@@ -2,11 +2,13 @@ import numpy as np
 import matplotlib.pyplot as plt
 import random
 import math
+import warnings
+warnings.simplefilter(action='ignore', category=FutureWarning)
 import pandas as pd
 
 # hyperparameters
 POP_SIZE = 100
-N_ITER = 500
+N_ITER = 50
 ELISTISM_FAC = 20
 
 
@@ -113,11 +115,11 @@ def plotRoute_out(route):
         if i + 1 == len(route):
             x_values = [route[i][0], route[0][0]]
             y_values = [route[i][1], route[0][1]]
-            plt.plot(x_values, y_values)
+            plt.plot(x_values, y_values, "g--")
         else:
             x_values = [route[i][0], route[i + 1][0]]
             y_values = [route[i][1], route[i + 1][1]]
-            plt.plot(x_values, y_values)
+            plt.plot(x_values, y_values, "g--")
         i += 1
     plt.show()
 
@@ -130,7 +132,7 @@ def startMethod(cities_input, n_cities_input):
     # ts.plotCities()
     # ts.plotRoute(random_route)
     # plt.show()
-    print('initial route distance is: ' + str(ts.getDistance(random_route)))
+    #print('initial route distance is: ' + str(ts.getDistance(random_route)))
 
     # initialize population
     population = pd.DataFrame({'solutions': [], 'fitness': []})
@@ -165,5 +167,5 @@ def startMethod(cities_input, n_cities_input):
     # ts.plotCities()
     # ts.plotRoute(solution)
     # plt.show()
-    print('final route distance is: ' + str(ts.getDistance(solution)))
+    #print('final route distance is: ' + str(ts.getDistance(solution)))
     return solution, ts.getDistance(solution)
