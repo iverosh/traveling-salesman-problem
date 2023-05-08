@@ -9,7 +9,7 @@ import pandas as pd
 
 # hyperparameters
 POP_SIZE = 100
-N_ITER = 50
+N_ITER = 100
 ELISTISM_FAC = 20
 
 
