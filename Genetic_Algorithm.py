@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 import random
 import math
 import warnings
+
 warnings.simplefilter(action='ignore', category=FutureWarning)
 import pandas as pd
 
@@ -132,7 +133,7 @@ def startMethod(cities_input, n_cities_input):
     # ts.plotCities()
     # ts.plotRoute(random_route)
     # plt.show()
-    #print('initial route distance is: ' + str(ts.getDistance(random_route)))
+    # print('initial route distance is: ' + str(ts.getDistance(random_route)))
 
     # initialize population
     population = pd.DataFrame({'solutions': [], 'fitness': []})
@@ -167,5 +168,5 @@ def startMethod(cities_input, n_cities_input):
     # ts.plotCities()
     # ts.plotRoute(solution)
     # plt.show()
-    #print('final route distance is: ' + str(ts.getDistance(solution)))
+    # print('final route distance is: ' + str(ts.getDistance(solution)))
     return solution, ts.getDistance(solution)
